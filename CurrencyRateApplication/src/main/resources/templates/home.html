@@ -1,0 +1,68 @@
+<!DOCTYPE>
+<html>
+<head>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        label {
+            display: inline-block;
+            width: 150px;
+            text-align: right;
+        }
+
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+<body>
+
+<h2>valiutų kursų portalas</h2>
+<div>
+</div>
+<h3>Valiutos kursu istorija</h3>
+<form action="/get_currency_history" object="${get_currency_history}" method="get">
+    <label for="ccy">Valiuta</label>
+    <input type="text" id="ccy" name="ccy">
+    <input type="submit" value="Submit">
+    <input type="reset">
+</form>
+<h3>Valiutos skaiciuokle</h3>
+
+<form action="/calculator" object="${calculator}" method="get" target="frame">
+
+    <label for="ccyFrom">Valiuta iš</label>
+    <input type="text" id="ccyFrom" name="ccyFrom"><br>
+    <label for="sum">Suma</label>
+    <input type="text" id="sum" name="sum"><br>
+    <label for="ccyTo">Valiuta į</label>
+    <input type="text" id="ccyTo" name="ccyTo"><br>
+    <input type="submit" value="Submit">
+    <input type="reset"><br>
+
+</form>
+
+<table>
+    <tr>
+        <th>Currency</th>
+        <th>Rate</th>
+    </tr>
+    <tr data-th-each="currency : ${currencies}">
+        <td data-th-text="${currency.name}">...</td>
+        <td data-th-text="${currency.rate}">...</td>
+    </tr>
+
+</table>
+</body>
+</html>
