@@ -1,48 +1,47 @@
 <!DOCTYPE>
 <html>
 <head>
-  <style>
-    table {
-      font-family: arial, sans-serif;
-      border-collapse: collapse;
-      width: 100%;
-    }
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
 
-    td, th {
-      border: 1px solid #dddddd;
-      text-align: left;
-      padding: 8px;
-    }
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
 
-    tr:nth-child(even) {
-      background-color: #dddddd;
-    }
-  </style>
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+
+    </style>
 </head>
 <body>
 
 <h2>valiutų kursų portalas</h2>
 <div>
 </div>
-
 <form action="/get_currency_history" object="${get_currency_history}" method="get">
-  <label for="ccy">Iveskite valiuta, kurios kurso valiuta norite pamatyti</label>
-  <input type="text" id="ccy" name="ccy">
-  <input type="submit" value="Submit">
-  <input type="reset">
-
+    <label for="ccy">Iveskite valiuta, kurios kurso valiuta norite pamatyti</label>
+    <input type="text" id="ccy" name="ccy">
+    <input type="submit" value="Submit">
+    <input type="reset">
 </form>
 <table>
-  <tr>
-    <th>Currency</th>
-    <th>Rate</th>
-    <th>Date</th>
-  </tr>
-  <tr data-th-each="currency : ${currencies}">
-    <td data-th-text="${currency.name}">...</td>
-    <td data-th-text="${currency.rate}">...</td>
-    <td data-th-text="${currency.date}">...</td>
-  </tr>
+    <tr>
+        <th>Currency</th>
+        <th>Rate</th>
+        <th>Date</th>
+    </tr>
+    <tr data-th-each="currency : ${currencies}">
+        <td data-th-text="${currency.name}">...</td>
+        <td data-th-text="${currency.rate}">...</td>
+        <td data-th-text="${currency.date}">...</td>
+    </tr>
 
 </table>
 </body>
