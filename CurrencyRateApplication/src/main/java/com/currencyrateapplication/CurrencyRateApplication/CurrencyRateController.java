@@ -3,7 +3,6 @@ package com.currencyrateapplication.CurrencyRateApplication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.xml.sax.SAXException;
 
 import javax.websocket.server.PathParam;
@@ -25,7 +24,7 @@ public class CurrencyRateController {
     public String currencyHistoryPage(Model model, @PathParam("get_currency_history") String ccy) throws ParserConfigurationException, IOException, SAXException {
         List<Dictionary> currencies = new ArrayList<>();
         String url = "https://www.lb.lt/webservices/FxRates/FxRates.asmx/getFxRatesForCurrency?tp=eu&ccy=" + ccy + "&dtFrom=2015-01-01&dtTo=2021-01-01";
-        List<FxRate> getData = currencyDataSource.getLatestRates(url);
+        List<com.currencyrateapplication.CurrencyRateApplication.FxRate> getData = currencyDataSource.getLatestRates(url);
         int loopLength = currencyDataSource.getLatestRates(url).size();
         for (int i = 0; i < loopLength; i++) {
             Dictionary<String, String> currencyAndRate = new Hashtable<>();
@@ -44,7 +43,7 @@ public class CurrencyRateController {
     public String homePage(Model model) throws ParserConfigurationException, IOException, SAXException {
         List<Dictionary> currencies = new ArrayList<>();
         String url = "http://www.lb.lt/webservices/FxRates/FxRates.asmx/getCurrentFxRates?tp=eu";
-        List<FxRate> getData = currencyDataSource.getLatestRates(url);
+        List<com.currencyrateapplication.CurrencyRateApplication.FxRate> getData = currencyDataSource.getLatestRates(url);
         int loopLength = currencyDataSource.getLatestRates(url).size();
         for (int i = 0; i < loopLength; i++) {
             Dictionary<String, String> currencyAndRate = new Hashtable<>();
