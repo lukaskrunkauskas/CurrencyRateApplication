@@ -1,4 +1,4 @@
-package com.currencyrateapplication.CurrencyRateApplication;
+package com.currencyrateapplication.currencyrateapplication;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

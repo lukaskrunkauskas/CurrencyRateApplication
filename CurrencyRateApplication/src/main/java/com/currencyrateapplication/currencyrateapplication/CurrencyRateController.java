@@ -1,4 +1,4 @@
-package com.currencyrateapplication.CurrencyRateApplication;
+package com.currencyrateapplication.currencyrateapplication;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,9 +22,9 @@ public class CurrencyRateController {
 
     @GetMapping("/get_currency_history")
     public String currencyHistoryPage(Model model, @PathParam("get_currency_history") String ccy) throws ParserConfigurationException, IOException, SAXException {
-        List<Dictionary> currencies = new ArrayList<>();
+        List<Dictionary<String, String>> currencies = new ArrayList<>();
         String url = "https://www.lb.lt/webservices/FxRates/FxRates.asmx/getFxRatesForCurrency?tp=eu&ccy=" + ccy + "&dtFrom=2015-01-01&dtTo=2021-01-01";
-        List<com.currencyrateapplication.CurrencyRateApplication.FxRate> getData = currencyDataSource.getLatestRates(url);
+        List<com.currencyrateapplication.currencyrateapplication.FxRate> getData = currencyDataSource.getLatestRates(url);
         int loopLength = currencyDataSource.getLatestRates(url).size();
         for (int i = 0; i < loopLength; i++) {
             Dictionary<String, String> currencyAndRate = new Hashtable<>();
@@ -41,9 +41,9 @@ public class CurrencyRateController {
 
     @GetMapping("/")
     public String homePage(Model model) throws ParserConfigurationException, IOException, SAXException {
-        List<Dictionary> currencies = new ArrayList<>();
+        List<Dictionary<String, String>> currencies = new ArrayList<>();
         String url = "http://www.lb.lt/webservices/FxRates/FxRates.asmx/getCurrentFxRates?tp=eu";
-        List<com.currencyrateapplication.CurrencyRateApplication.FxRate> getData = currencyDataSource.getLatestRates(url);
+        List<com.currencyrateapplication.currencyrateapplication.FxRate> getData = currencyDataSource.getLatestRates(url);
         int loopLength = currencyDataSource.getLatestRates(url).size();
         for (int i = 0; i < loopLength; i++) {
             Dictionary<String, String> currencyAndRate = new Hashtable<>();
@@ -61,11 +61,9 @@ public class CurrencyRateController {
     @GetMapping("/calculator")
     public String calculatorPage(Model model, @PathParam("calculator") String ccyFrom, @PathParam("calculator") String sum, @PathParam("calculator") String ccyTo) throws ParserConfigurationException, IOException, SAXException {
         Dictionary<String, Double> answer = new Hashtable<>();
-        //List<Dictionary> answer = new ArrayList<>();
 
         String url = "http://www.lb.lt/webservices/FxRates/FxRates.asmx/getCurrentFxRates?tp=eu";
         answer.put("atsakymas", currencyDataSource.calculateCurrency(url, ccyFrom, sum, ccyTo));
-        //answer.add(temp);
 
         model.addAttribute("answer", answer);
         return "calculator";

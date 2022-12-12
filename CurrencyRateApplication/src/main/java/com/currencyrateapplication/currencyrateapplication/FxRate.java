@@ -1,4 +1,4 @@
-package com.currencyrateapplication.CurrencyRateApplication;
+package com.currencyrateapplication.currencyrateapplication;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

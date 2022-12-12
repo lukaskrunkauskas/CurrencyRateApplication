@@ -15,6 +15,8 @@
 	<description>A project for finding and calculating currency rates.</description>
 	<properties>
 		<java.version>16</java.version>
+		<sonar.organization>lukaskrunkauskas</sonar.organization>
+		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -40,11 +42,12 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.5.6</version>
+		</dependency>
 	</dependencies>
-	<properties>
-		<sonar.organization>lukaskrunkauskas</sonar.organization>
-		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
-	</properties>
 	<build>
 
 		<plugins>

@@ -1,4 +1,4 @@
-package com.currencyrateapplication.CurrencyRateApplication;
+package com.currencyrateapplication.currencyrateapplication;
 
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
@@ -22,7 +22,7 @@ import java.util.List;
 @Service
 public class CurrencyDataSource {
 
-    public List<com.currencyrateapplication.CurrencyRateApplication.FxRate> getLatestRates(String url) throws ParserConfigurationException, IOException, SAXException {
+    public StringBuilder readXml(String url) throws IOException {
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
         BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
@@ -32,11 +32,15 @@ public class CurrencyDataSource {
             response.append(inputLine);
         }
         in.close();
+        return response;
+    }
 
+    public List<FxRate> getLatestRates(String url) throws ParserConfigurationException, IOException, SAXException {
+        StringBuilder response = readXml(url);
         Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new InputSource(new StringReader(response.toString())));
         NodeList nList1 = doc.getElementsByTagName("CcyAmt");
         NodeList nList2 = doc.getElementsByTagName("FxRate");
-        List<com.currencyrateapplication.CurrencyRateApplication.FxRate> ccyAndAmt = new ArrayList<>();
+        List<FxRate> ccyAndAmt = new ArrayList<>();
         String a;
         String b;
         String c;
@@ -56,7 +60,7 @@ public class CurrencyDataSource {
                 } else {
                     c = " ";
                 }
-                com.currencyrateapplication.CurrencyRateApplication.FxRate single = new com.currencyrateapplication.CurrencyRateApplication.FxRate(a, b, c);
+                FxRate single = new FxRate(a, b, c);
                 ccyAndAmt.add(single);
             }
         }
@@ -64,16 +68,7 @@ public class CurrencyDataSource {
     }
 
     public double calculateCurrency(String url, String ccyFrom, String sum, String ccyTo) throws ParserConfigurationException, IOException, SAXException {
-        URL obj = new URL(url);
-        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-        String inputLine;
-        StringBuilder response = new StringBuilder();
-        while ((inputLine = in.readLine()) != null) {
-            response.append(inputLine);
-        }
-        in.close();
-        StringBuilder xmlString = response;
+        StringBuilder xmlString = readXml(url);
         Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new InputSource(new StringReader(xmlString.toString())));
         NodeList nList = doc.getElementsByTagName("CcyAmt");
         for (int temp = 0; temp < nList.getLength(); temp++) {
@@ -85,8 +80,10 @@ public class CurrencyDataSource {
             if (eElement.getElementsByTagName("Ccy").item(0).getTextContent().equals(ccyTo)) {
                 ccyTo = eElement.getElementsByTagName("Amt").item(0).getTextContent();
             }
+
         }
         return Double.parseDouble(ccyTo) / Double.parseDouble(ccyFrom) * Double.parseDouble(sum);
     }
+
 }
 
